@@ -1,9 +1,9 @@
+import styled from '@emotion/styled';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import styled from '@emotion/styled';
-import Post from './Post';
 import Container from '../common/Container';
 import useWindowWidth from '../hooks/useWindowWidth';
+import Post from './Post';
 
 const PostListContainer = styled.div(() => ({
   display: 'flex',
@@ -61,7 +61,7 @@ export default function Posts() {
     <Container>
       <PostListContainer>
         {posts.map(post => (
-          <Post post={post} />
+          <Post key={post.id} post={post} />
         ))}
       </PostListContainer>
 

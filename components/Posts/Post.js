@@ -1,6 +1,6 @@
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
-import styled from '@emotion/styled';
 
 const PostContainer = styled.div(() => ({
   width: '300px',
@@ -65,11 +65,12 @@ const NextButton = styled(Button)`
 
 const Post = ({ post }) => {
   const carouselRef = useRef(null);
+  const { images, body, title } = post;
 
   const handleNextClick = () => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({
-        left: 50,
+        left: 300,
         behavior: 'smooth',
       });
     }
@@ -78,7 +79,7 @@ const Post = ({ post }) => {
   const handlePrevClick = () => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({
-        left: -70,
+        left: -300,
         behavior: 'smooth',
       });
     }
@@ -88,9 +89,9 @@ const Post = ({ post }) => {
     <PostContainer>
       <CarouselContainer>
         <Carousel ref={carouselRef}>
-          {post.images.map((image, index) => (
+          {images.map((image, index) => (
             <CarouselItem key={index}>
-              <Image src={image.url} alt={post.title} />
+              <Image src={image.url} alt={title} />
             </CarouselItem>
           ))}
         </Carousel>
@@ -98,8 +99,8 @@ const Post = ({ post }) => {
         <NextButton onClick={handleNextClick}>&#10095;</NextButton>
       </CarouselContainer>
       <Content>
-        <h2>{post.title}</h2>
-        <p>{post.body}</p>
+        <h2>{title}</h2>
+        <p>{body}</p>
       </Content>
     </PostContainer>
   );
@@ -107,7 +108,7 @@ const Post = ({ post }) => {
 
 Post.propTypes = {
   post: PropTypes.shape({
-    content: PropTypes.any,
+    body: PropTypes.any,
     images: PropTypes.shape({
       map: PropTypes.func,
     }),
