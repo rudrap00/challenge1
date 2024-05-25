@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Container from '../common/Container';
-import useWindowWidth from '../hooks/useWindowWidth';
+import { WindowWidthContext } from '../context/WindowWidthContext';
 import Post from './Post';
 
 const PostListContainer = styled.div(() => ({
@@ -36,7 +36,7 @@ export default function Posts() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [start, setStart] = useState(0);
-  const { isSmallerDevice } = useWindowWidth();
+  const { isSmallerDevice } = useContext(WindowWidthContext);
   const [hasNext, setHasNext] = useState(true);
 
   const fetchPost = async () => {

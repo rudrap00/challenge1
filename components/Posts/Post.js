@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import axios from 'axios';
 import PropTypes from 'prop-types';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const PostContainer = styled.div(() => ({
   width: '300px',
@@ -8,6 +9,36 @@ const PostContainer = styled.div(() => ({
   border: '1px solid #ccc',
   borderRadius: '5px',
   overflow: 'hidden',
+}));
+
+const UserContainer = styled.div(() => ({
+  width: '100%',
+  height: '40px',
+  padding: '10px',
+  display: 'flex',
+  gap: '10px',
+}));
+
+const PicContainer = styled.div(() => ({
+  width: '40px',
+  height: '40px',
+  borderRadius: '50%',
+  background: 'grey',
+  color: 'white',
+  textAlign: 'center',
+  lineHeight: '40px',
+  fontWeight: 'bold',
+  fontSize: '16px',
+  verticalAlign: 'middle',
+}));
+
+const InfoContainer = styled.div(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  '.name': {
+    fontWeight: 'bolder',
+  },
 }));
 
 const CarouselContainer = styled.div(() => ({
@@ -69,7 +100,24 @@ const NextButton = styled(Button)`
 
 const Post = ({ post }) => {
   const carouselRef = useRef(null);
-  const { images, body, title } = post;
+  const { images, body, title, userId } = post;
+  const [user, setUser] = useState({});
+
+  const fetchData = async () => {
+    const { data: userData } = await axios.get(`/api/v1/users/${userId}`);
+
+    setUser(userData);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const { name, email } = user;
+  const letters = name
+    ?.split(' ')
+    .map(word => word[0])
+    .join('');
 
   const handleNextClick = () => {
     if (carouselRef.current) {
@@ -91,6 +139,13 @@ const Post = ({ post }) => {
 
   return (
     <PostContainer>
+      <UserContainer>
+        <PicContainer>{letters}</PicContainer>
+        <InfoContainer>
+          <div className={'name'}>{name}</div>
+          <div>{email}</div>
+        </InfoContainer>
+      </UserContainer>
       <CarouselContainer>
         <Carousel ref={carouselRef}>
           {images.map((image, index) => (
@@ -120,6 +175,7 @@ Post.propTypes = {
       }),
     ),
     title: PropTypes.any,
+    userId: PropTypes.number,
   }),
 };
 
