@@ -113,9 +113,12 @@ const Post = ({ post }) => {
 Post.propTypes = {
   post: PropTypes.shape({
     body: PropTypes.any,
-    images: PropTypes.shape({
-      map: PropTypes.func,
-    }),
+    images: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.any,
+        url: PropTypes.any,
+      }),
+    ),
     title: PropTypes.any,
   }),
 };

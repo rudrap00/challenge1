@@ -6,7 +6,8 @@ const { default: axios } = require('axios');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const posts = await fetchPosts();
+  const { query } = req;
+  const posts = await fetchPosts(query);
 
   const postsWithImages = await Promise.all(
     posts.map(async post => {
