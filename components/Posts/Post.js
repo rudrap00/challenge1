@@ -57,10 +57,14 @@ const Button = styled.button(() => ({
 
 const PrevButton = styled(Button)`
   left: 10px;
+  top: 50%;
+  transform: translate(0, -50%);
 `;
 
 const NextButton = styled(Button)`
   right: 10px;
+  top: 50%;
+  transform: translate(0, -50%);
 `;
 
 const Post = ({ post }) => {

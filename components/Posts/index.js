@@ -57,6 +57,8 @@ export default function Posts() {
     }, 3000);
   };
 
+  console.log(posts);
+
   return (
     <Container>
       <PostListContainer>
